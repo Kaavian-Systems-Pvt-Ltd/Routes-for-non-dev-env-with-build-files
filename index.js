@@ -26,5 +26,9 @@ exports.build = function(app){
     '/static',
     express.static(path.join(__dirname, '/../../../client/build/static')),
   );
+  app.use(
+    '/images',
+    express.static(path.join(__dirname, '/../client/build/images'))
+  );
   console.log(path.join(__dirname, '/../../../client/build/static'), 'path');
 }
