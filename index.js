@@ -19,7 +19,7 @@ exports.build = function(app){
     );
     app.all('*', (req, res) => {
       console.log(path.join(__dirname + '/../../../client/build/index.html'), 'path2');
-      res.sendFile(indexHTMLContent);
+      res.sendFile(indexHTMLContent, { root: __dirname });
     });
   }
   // For serving built static js/css files
