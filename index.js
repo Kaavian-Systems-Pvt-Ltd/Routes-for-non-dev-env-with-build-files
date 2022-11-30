@@ -13,13 +13,13 @@ const NODE_ENV = process.env.NODE_ENV;
 exports.build = function(app){
   console.log(path.join(__dirname + '/../../../client/build/index.html'), 'path1');
   if (NODE_ENV === 'DIT') {
-    const indexHTMLContent = fs.readFileSync(
-      path.join(__dirname + '/../../../client/build/index.html'),
-      'utf8'
-    );
+    // const indexHTMLContent = fs.readFileSync(
+    //   path.join(__dirname + '/../../../client/build/index.html'),
+    //   'utf8'
+    // );
     app.all('*', (req, res) => {
       console.log(path.join(__dirname + '/../../../client/build/index.html'), 'path2');
-      res.sendFile(indexHTMLContent, { root: __dirname });
+      res.sendFile(path.join(__dirname + '/../../../client/build/index.html'));
     });
   }
   // For serving built static js/css files
