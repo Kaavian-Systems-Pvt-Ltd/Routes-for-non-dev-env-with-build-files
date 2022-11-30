@@ -11,15 +11,9 @@ const NODE_ENV = process.env.NODE_ENV;
  * } app 
  */
 exports.build = function(app){
-  if (NODE_ENV === 'DIT') {
-    const indexHTMLContent = fs.readFileSync(
-      path.join(__dirname + '/../../../client/build/index.html'),
-      'utf8'
-    );
     app.all('*', (req, res) => {
-      res.send(indexHTMLContent);
+      res.sendFile(path.join(__dirname + '/../../../client/build/index.html'));
     });
-  }
   // For serving built static js/css files
   app.use(
     '/static',
