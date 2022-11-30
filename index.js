@@ -18,7 +18,6 @@ exports.build = function(app){
     //   'utf8'
     // );
     app.all('*', (req, res) => {
-      console.log(path.join(__dirname + '/../../../client/build/index.html'), 'path2');
       res.sendFile(path.join(__dirname + '/../../../client/build/index.html'));
     });
   }
@@ -26,6 +25,6 @@ exports.build = function(app){
   app.use(
     '/static',
     express.static(path.join(__dirname, '/../../../client/build/static')),
-    console.log(path.join(__dirname, '/../../../client/build/static'))
   );
+  console.log(path.join(__dirname, '/../../../client/build/static'), 'path');
 }
