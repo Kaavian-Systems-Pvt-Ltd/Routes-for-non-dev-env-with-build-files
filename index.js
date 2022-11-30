@@ -21,7 +21,10 @@ exports.build = function(app){
       res.send(indexHTMLContent);
     });
   }
-  // For serving built static js/css files
+}
+
+exports.buildStaticFiles = function(app){
+   // For serving built static js/css files
   app.use(
     '/static',
     express.static(path.join(__dirname, '/../../../client/build/static')),
@@ -30,5 +33,4 @@ exports.build = function(app){
     '/images',
     express.static(path.join(__dirname, '/../client/build/images'))
   );
-  console.log(path.join(__dirname, '/../../../client/build/static'), 'path');
 }
