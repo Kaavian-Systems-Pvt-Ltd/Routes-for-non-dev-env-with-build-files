@@ -25,6 +25,7 @@ exports.build = function(app){
   // For serving built static js/css files
   app.use(
     '/static',
-    express.static(path.join(__dirname, '/../../../client/build/static'))
+    express.static(path.join(__dirname, '/../../../client/build/static')),
+    console.log(path.join(__dirname, '/../../../client/build/static'))
   );
 }
