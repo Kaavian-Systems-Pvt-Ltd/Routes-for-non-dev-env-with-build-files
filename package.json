@@ -1,5 +1,5 @@
 {
-  "name": "build-files-module",
+  "name": "@kaavian/build-files-module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
