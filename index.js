@@ -12,10 +12,17 @@ const NODE_ENV = process.env.NODE_ENV;
  */
 exports.build = function(app){
   if (NODE_ENV === 'DIT') {
+    const indexHTMLContent = fs.readFileSync(
+      path.join(__dirname + '/../../build/index.html'),
+      'utf8'
+    );
     app.all('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'build', 'index.html'));
+      res.send(indexHTMLContent);
     });
   }
-  console.log(__dirname);
-  app.use(express.static(path.join(__dirname, 'build')));
+  // For serving built static js/css files
+  app.use(
+    '/static',
+    express.static(path.join(__dirname, '/../../build/static'))
+  );
 }
