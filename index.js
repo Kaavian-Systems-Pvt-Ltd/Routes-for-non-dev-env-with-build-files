@@ -18,7 +18,7 @@ exports.build = function(app){
       'utf8'
     );
     app.all('*', (req, res) => {
-      res.sendFile(indexHTMLContent);
+      res.send(indexHTMLContent);
     });
   }
   // For serving built static js/css files
