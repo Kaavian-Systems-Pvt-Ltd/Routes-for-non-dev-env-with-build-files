@@ -1,5 +1,4 @@
 const express = require('express');
-// const app = express();
 const fs = require('fs');
 const path = require('path');
 const NODE_ENV = process.env.NODE_ENV;
@@ -10,28 +9,22 @@ const NODE_ENV = process.env.NODE_ENV;
  * @param {
  * } app 
  */
-exports.build = function(app){
-  console.log(path.join(__dirname + '/../../../client/build/index.html'), 'path1');
+exports.build = function(properties){
   if (NODE_ENV === 'DIT') {
     const indexHTMLContent = fs.readFileSync(
-      path.join(__dirname + '/../../../client/build/index.html'),
+      path.join(properties.filePath),
       'utf8'
     );
-    app.all('*', (req, res) => {
+    properties.application.all('*', (req, res) => {
       res.send(indexHTMLContent);
     });
   }
 }
 
-exports.buildStaticFiles = (app) => {
-   // For serving built static js/css files
-  // app.use(
-  //   '/static',
-  //   express.static(path.join(__dirname + '/../../../client/build/static')),
-  // );
-  // app.use(
-  //   '/images',
-  //   express.static(path.join(__dirname + '/../../../client/build/images'))
-  // );
-  app.use(express.static(path.join(__dirname + '/../../../client/build')))
+// for serving built static js/css files
+exports.builtStaticFiles = function(properties){
+  properties.application.use(
+    properties.folderName,
+    express.static(path.join(properties.filePath))
+  );
 }
