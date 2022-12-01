@@ -3,39 +3,38 @@ const fs = require('fs');
 const path = require('path');
 const NODE_ENV = process.env.NODE_ENV;
 
-// For any other request, serve HTML in DIT environment (cloud env)
-/**
- * 
- * @param {
- * } app 
- */
-exports.build = function(app, rootDirectory, filePath){
-  // const rootDirectory = properties.rootDirectory;
-  // const filePath = properties.filePath;
-  // const app = properties.application;
+// Module - For any other request, serve HTML in DIT environment (cloud env)
 
-  console.log(app);
+/**
+ * Function that is used for serving HTML in DIT environment..
+ * @param {*Object{application: , rootDirectory: , filePath: }} properties 
+ * properties required for serving built static js/css files are sent as objects,
+ * Such as Name of the express application, 
+ * root directory of the file and the file path that is to be served...
+ */
+exports.build = function(properties){
   if (NODE_ENV === 'DIT') {
     const indexHTMLContent = fs.readFileSync(
-      path.join(rootDirectory + filePath),
+      path.join(properties.rootDirectory + properties.filePath),
       'utf8'
     );
-    app.all('*', (req, res) => {
+    properties.application.all('*', (req, res) => {
       res.send(indexHTMLContent);
     });
   }
 }
 
-// for serving built static js/css files
-exports.builtStaticFiles = function(app, folderName, rootDirectory, filePath){
-  // const rootDirectory = properties.rootDirectory;
-  // const filePath = properties.filePath;
-  // const folderName = properties.folderName;
-  // const app = properties.application;
-  console.log(folderName);
-console.log(app);
-  app.use(
-    folderName,
-    express.static(path.join(rootDirectory + filePath))
+/**
+ * Function that is used for serving built static cs/jss files..
+ * @param {*Object{application: , folderName: , rootDirectory: , filePath: }} properties 
+ * properties required for serving built static js/css files are sent as objects,
+ * Such as Name of the express application, Name of the folder that is to be served, 
+ * root directory of the file and the file path that is to be served...
+ */
+// Module for serving built static js/css files
+exports.builtStaticFiles = function(properties){
+  properties.application.use(
+    properties.folderName,
+    express.static(path.join(properties.rootDirectory + properties.filePath))
   );
 }
