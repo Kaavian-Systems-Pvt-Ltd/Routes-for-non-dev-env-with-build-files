@@ -25,12 +25,13 @@ exports.build = function(app){
 
 exports.buildStaticFiles = (app) => {
    // For serving built static js/css files
-  app.use(
-    '/static',
-    express.static(path.join(__dirname + '/../../../client/build/static')),
-  );
-  app.use(
-    '/images',
-    express.static(path.join(__dirname + '/../../../client/build/images'))
-  );
+  // app.use(
+  //   '/static',
+  //   express.static(path.join(__dirname + '/../../../client/build/static')),
+  // );
+  // app.use(
+  //   '/images',
+  //   express.static(path.join(__dirname + '/../../../client/build/images'))
+  // );
+  app.use(express.static(path.join(__dirname + '/../../../client/build')))
 }
