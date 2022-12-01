@@ -23,7 +23,7 @@ exports.build = function(app){
   }
 }
 
-exports.buildStaticFiles = function(app){
+exports.buildStaticFiles = (app) => {
    // For serving built static js/css files
   app.use(
     '/static',
@@ -31,6 +31,6 @@ exports.buildStaticFiles = function(app){
   );
   app.use(
     '/images',
-    express.static(path.join(__dirname, '/../client/build/images'))
+    express.static(path.join(__dirname, '/../../../client/build/images'))
   );
 }
