@@ -12,7 +12,7 @@ const NODE_ENV = process.env.NODE_ENV;
 exports.build = function(properties){
   if (NODE_ENV === 'DIT') {
     const indexHTMLContent = fs.readFileSync(
-      path.join(properties.filePath),
+      path.join(properties.rootDirectory + properties.filePath),
       'utf8'
     );
     properties.application.all('*', (req, res) => {
@@ -25,6 +25,6 @@ exports.build = function(properties){
 exports.builtStaticFiles = function(properties){
   properties.application.use(
     properties.folderName,
-    express.static(path.join(properties.filePath))
+    express.static(path.join(properties.rootDirectory, properties.filePath))
   );
 }
