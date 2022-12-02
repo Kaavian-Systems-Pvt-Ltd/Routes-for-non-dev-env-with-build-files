@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "moon": "jasmine --config=spec/support/jasmine.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "jasmine": "^4.5.0",
+    "sinon": "^15.0.0"
   }
 }
