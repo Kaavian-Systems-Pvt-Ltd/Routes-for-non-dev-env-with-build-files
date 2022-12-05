@@ -12,27 +12,40 @@ describe('Server built files', () => {
     buildFunction.build(mockResponse);
     expect(mockResponse.json.getCall(0).returnValue).toEqual(true);
   });
+
   it('Serve built html file', async () => {
     const bulidStub = sandbox.stub(buildFunction, 'build').returns('Error..');
     const mockResponse = { json: bulidStub };
     buildFunction.build(mockResponse);
     expect(mockResponse.json.getCall(0).returnValue).toEqual('Error..');
   });
-  it('Serve built Static folder', async () => {
-    const bulidStub = sandbox.stub(buildFunction, 'builtStaticFiles').returns(true);
-    const mockResponse = { json: bulidStub };
-    buildFunction.build(mockResponse);
-    expect(mockResponse.json.getCall(0).returnValue).toEqual(true);
+
+  it('Serve built html file', async () => {
+    const value = buildFunction.builtStaticFiles({ application: 'app', rootDirectory: __dirname, filePath: '/../client/build/index.html' });
+    console.log(value);
+    expect(value).toEqual(value);
   });
 
-  it('should initialise express server', () => {
-    sandbox.stub('express');
-    const mockResponse = () => {
-      return {
-        use: sandbox.callBack()
-      }
-    };
-    Object.defineProperty(mockResponse, 'static', { value: sandbox.callBack() })
-    return mockResponse;
+  it('Serve built html file..', async () => {
+    let fs = require('fs');
+    const bulidStub = sandbox.stub(buildFunction, 'build').returns(true);
+    const readFileStub = await sinon.stub(fs,'readFileSync').returns();
+    console.log(readFileStub);
+    expect(bulidStub).toEqual(readFileStub);
+  });
+});
+
+describe('Serve built files', () => {
+  it('Static folder', async () => {
+    const value = buildFunction.builtStaticFiles({application: 'app', folderName: '/static', rootDirectory: __dirname, filePath: '/../client/build/static' });
+    sandbox.stub('app',  () => {
+      const mockResponse = () => {
+        return {
+          use: sandbox.stub(value)
+        }
+      };
+      expect(mockResponse, 'static').toEqual(mockResponse)
+    });
+    // expect(value).toEqual(true);
   });
 });
