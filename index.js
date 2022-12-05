@@ -1,43 +1,51 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const NODE_ENV = process.env.NODE_ENV;
 
 /**
- * Function - For any other request, serve HTML in DIT environment (cloud env)
+ * Function - For any other request, serve HTML in DIT environment (cloud env).
  * 
- * properties required for serving HTML in DIT environment..
+ * properties required for serving HTML in DIT environment are sent as objects
  * 
- * @param {*Object} application - Name of the express application
- * @param {*Object} rootDirectory - Root directory of the file
- * @param {*Object} filePath - File path that is to be served...
+ * @param {*application} Name of the express application
+ * @param {*rootDirectory} of the file
+ * @param {*filePath} path of the file from root directory
+ * @returns the html file to be served in DIT environment
  */
-exports.build = function(properties){
-  if (NODE_ENV === 'DIT') {
-    const indexHTMLContent = fs.readFileSync(
-      path.join(properties.rootDirectory + properties.filePath),
-      'utf8'
-    );
-    properties.application.all('*', (req, res) => {
-      res.send(indexHTMLContent);
-    });
-  }
+exports.build = function(propertyKey){
+  const app = propertyKey.application;
+  const rootDirectory = propertyKey.rootDirectory;
+  const filePath = propertyKey.filePath;
+
+  const indexHTMLContent = fs.readFileSync(
+    path.join(rootDirectory + filePath),
+    'utf8'
+  );
+  app.all('*', (req, res) => {
+    res.send(indexHTMLContent);
+  });
 }
 
 /**
- * Function that is used for serving built static cs/jss files..
+ * Function that is used for serving built static cs/jss files.
  * 
  * properties required for serving built static js/css files are sent as objects
  * 
- * @param {*Object} folderName - Name of the folder that is to be served..
- * @param {*Object} application - Name of the express application
- * @param {*Object} rootDirectory - Root directory of the file
- * @param {*Object} filePath - File path that is to be served...
+ * @param {*folderName} that is to be served
+ * @param {*application} - Name of the express application
+ * @param {*rootDirectory} of the file that is to be served
+ * @param {*filePath} path of the file from root directory
+ * @returns the static file to be served in DIT environment
  */
 
-exports.builtStaticFiles = function(properties){
-  properties.application.use(
-    properties.folderName,
-    express.static(path.join(properties.rootDirectory + properties.filePath))
+exports.builtStaticFiles = function(propertyKey){
+  const app = propertyKey.application;
+  const folderName = propertyKey.folderName;
+  const rootDirectory = propertyKey.rootDirectory;
+  const filePath = propertyKey.filePath;
+  
+  app.use(
+    folderName,
+    express.static(path.join(rootDirectory + filePath))
   );
 }
