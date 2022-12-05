@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "moon": "jasmine --config=spec/support/jasmine.json"
+    "test": "nyc jasmine --config=spec/support/jasmine.json",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "jasmine": "^4.5.0",
+    "nyc": "^15.1.0",
     "sinon": "^15.0.0"
   }
 }
