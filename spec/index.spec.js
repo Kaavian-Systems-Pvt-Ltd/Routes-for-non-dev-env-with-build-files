@@ -6,13 +6,13 @@ describe('Server built files', () => {
   afterEach(async () => {
     sandbox.restore();
   });
-  it('Serve built htnl file', async () => {
+  it('Serve built html file', async () => {
     const bulidStub = sandbox.stub(buildFunction, 'build').returns(true);
     const mockResponse = { json: bulidStub };
     buildFunction.build(mockResponse);
     expect(mockResponse.json.getCall(0).returnValue).toEqual(true);
   });
-  it('Serve built htnl file', async () => {
+  it('Serve built html file', async () => {
     const bulidStub = sandbox.stub(buildFunction, 'build').returns('Error..');
     const mockResponse = { json: bulidStub };
     buildFunction.build(mockResponse);
@@ -36,15 +36,3 @@ describe('Server built files', () => {
     return mockResponse;
   });
 });
-
-  // jest.mock('express', () => {
-  //   const mockedExpress = () => {
-  //     return {
-  //       get: jest.fn(),
-  //       use: jest.fn(),
-  //       listen: jest.fn(),
-  //     }
-  //   };
-  //   Object.defineProperty(mockedExpress, "static", { value: jest.fn() });
-  //   return mockedExpress;
-  // });
