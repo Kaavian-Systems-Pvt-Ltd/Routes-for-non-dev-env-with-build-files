@@ -1,4 +1,3 @@
-const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,26 +6,20 @@ const path = require('path');
  * 
  * properties required for serving HTML in DIT environment are sent as objects
  * 
- * @param {{* application: app, rootDirectory: 'root directory path', filePath: 'path of the file' }}
+ * @param {{* expressApplication: express(), rootDirectory: 'root directory path', filePath: 'path of the file' }}
  * @returns the html file to be served in DIT environment
  */
-exports.build = function(propertyKey){
-  const app = propertyKey.application;
-  const rootDirectory = propertyKey.rootDirectory;
-  const filePath = propertyKey.filePath;
-
+exports.build = function({ expressApplication, rootDirectory, filePath }){
   try {
     const indexHTMLContent = fs.readFileSync(
       path.join(rootDirectory + filePath),
       'utf8'
     );
-    app.all('*', (req, res) => {
+    expressApplication.all('*', (req, res) => {
       res.send(indexHTMLContent);
     });
   } catch(error) {
-    app.use((req, res, next) => (
-      res.status(500).send('Something went wrong!')
-    ))
+    throw new Error(error);
   }
 }
 
@@ -35,24 +28,17 @@ exports.build = function(propertyKey){
  * 
  * properties required for serving built static js/css files are sent as objects
  * 
- * @param {{* application: app, folderName: 'name of the folder', rootDirectory: 'root directory path', filePath: 'path of the file'}}
+ * @param {{* expressApplication: express(), express: express, folderName: 'name of the folder', rootDirectory: 'root directory path', filePath: 'path of the file'}}
  * @returns the built static cs/jss files that is to be served
  */
 
-exports.builtStaticFiles = function(propertyKey){
-  const app = propertyKey.application;
-  const folderName = propertyKey.folderName;
-  const rootDirectory = propertyKey.rootDirectory;
-  const filePath = propertyKey.filePath;
-  
+exports.builtStaticFiles = function({ expressApplication, express, folderName, rootDirectory, filePath}) {
   try {
-    app.use(
+    expressApplication.use(
       folderName,
       express.static(path.join(rootDirectory + filePath))
-    );
+   );
   } catch(error) {
-      app.use((req, res, next) => (
-        res.status(500).send('Something went wrong!')
-      ));
+     throw new Error(error);
   }
 }
