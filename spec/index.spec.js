@@ -22,12 +22,15 @@ describe('Server built files', () => {
 
   it('Serve built html file', async () => {
     const value = buildFunction.build({ expressApplication: 'app', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/index.html' });
-    expect(value).toEqual(null);
+    expect(value).toEqual(HTMLElement);
   });
 
-  // it('Serve html files', async () => {
-  //   sandbox.stub(buildFunction, 'builtStaticFiles')
-  // })
+  it('Serve html files', async () => {
+    sandbox.stub(buildFunction, 'build').returns('index.html');
+    const value = buildFunction.build({ expressApplication: 'app', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/index.html' });
+    console.log(value);
+    expect(value).toEqual('index.html')
+  })
 });
 
 describe('Serve built files', () => {
