@@ -19,7 +19,7 @@ exports.build = function({ expressApplication, rootDirectory, filePath }){
       res.send(indexHTMLContent);
     });
   } catch(error) {
-    throw new Error(error);
+    throw new Error('error', error);
   }
 }
 
@@ -36,9 +36,9 @@ exports.builtStaticFiles = function({ expressApplication, express, folderName, r
   try {
     expressApplication.use(
       folderName,
-      express.static(path.join(rootDirectory + filePath))
+    express.static(path.join(rootDirectory + filePath))
    );
   } catch(error) {
-     throw new Error(error);
+    throw new Error('error', error);
   }
 }
