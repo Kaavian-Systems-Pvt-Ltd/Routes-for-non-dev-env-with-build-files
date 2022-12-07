@@ -15,10 +15,12 @@ exports.build = function({ expressApplication, rootDirectory, filePath }){
       path.join(rootDirectory + filePath),
       'utf8'
     );
+    console.log(indecHTMLContent);
     expressApplication.all('*', (req, res) => {
       res.send(indexHTMLContent);
     });
   } catch(error) {
+    logger.error("Error occured", error);
     throw new Error('error', error);
   }
 }
@@ -39,6 +41,7 @@ exports.builtStaticFiles = function({ expressApplication, express, folderName, r
     express.static(path.join(rootDirectory + filePath))
    );
   } catch(error) {
+    logger.error("Error occured", error);
     throw new Error('error', error);
   }
 }
