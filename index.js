@@ -9,20 +9,15 @@ const path = require('path');
  * @param {{* expressApplication: express(), rootDirectory: 'root directory path', filePath: 'path of the file' }}
  * @returns the html file to be served in DIT environment
  */
-exports.build = function({ expressApplication, rootDirectory, filePath }){
-  try {
-    const indexHTMLContent = fs.readFileSync(
-      path.join(rootDirectory + filePath),
-      'utf8'
-    );
-    console.log(indecHTMLContent);
-    expressApplication.all('*', (req, res) => {
-      res.send(indexHTMLContent);
-    });
-  } catch(error) {
-    logger.error("Error occured", error);
-    throw new Error('error', error);
-  }
+function build({ expressApplication, rootDirectory, filePath }){
+  const indexHTMLContent = fs.readFileSync(
+    path.join(rootDirectory + filePath),
+    'utf8'
+  );
+  // console.log(indexHTMLContent);
+  expressApplication.all('*', (req, res) => {
+    res.send(indexHTMLContent);
+  });
 }
 
 /**
@@ -34,14 +29,13 @@ exports.build = function({ expressApplication, rootDirectory, filePath }){
  * @returns the built static cs/jss files that is to be served
  */
 
-exports.builtStaticFiles = function({ expressApplication, express, folderName, rootDirectory, filePath}) {
-  try {
+ function builtStaticFiles({ expressApplication, express, folderName, rootDirectory, filePath}) {
     expressApplication.use(
       folderName,
     express.static(path.join(rootDirectory + filePath))
    );
-  } catch(error) {
-    logger.error("Error occured", error);
-    throw new Error('error', error);
-  }
+}
+
+module.exports = {
+  build, builtStaticFiles
 }

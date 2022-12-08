@@ -1,60 +1,34 @@
 const sinon = require('sinon');
 const sandbox = sinon.createSandbox();
-const buildFunction = require('../index');
-
-describe('Server built files', () => {
-  afterEach(async () => {
-    sandbox.restore();
-  });
-  it('Serve built html file', async () => {
-    const buildStub = sandbox.stub(buildFunction, 'build').returns(true);
-    const mockResponse = { json: buildStub };
-    buildFunction.build(mockResponse);
-    expect(mockResponse.json.getCall(0).returnValue).toEqual(true);
-  });
-
-  it('Serve built html file', async () => {
-    sandbox.stub(buildFunction, 'build').returns(Promise.reject(new Error('error')));
-    const mockResponse = 'error';
-    buildFunction.build(mockResponse);
-    expect(mockResponse).toEqual('error');
-  });
-
-  it('Serve built html file', async () => {
-    const value = buildFunction.build({ expressApplication: 'app', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/index.html' });
-    expect(value).toEqual(HTMLElement);
-  });
-
-  it('Serve html files', async () => {
-    sandbox.stub(buildFunction, 'build').returns('index.html');
-    const value = buildFunction.build({ expressApplication: 'app', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/index.html' });
-    console.log(value);
-    expect(value).toEqual('index.html')
-  })
-});
+const { build, builtStaticFiles} = require('../index');
+const express = require('express');
+const app = express();
+const fs = require('fs');
+const path = require('path');
 
 describe('Serve built files', () => {
   afterEach(async () => {
     sandbox.restore();
   });
 
-  it('Serve built html file', async () => {
-    sandbox.stub(buildFunction, 'builtStaticFiles').returns(true);
-    const mockResponse = null;
-    buildFunction.builtStaticFiles(mockResponse);
-    expect(mockResponse).toEqual(null);
-  });
+  it('Serve html files', () => {
+    const indexHTMLContent = '<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>React App</title><script defer="defer" src="/static/js/main.c8003bb6.js"></script><link href="/static/css/main.0ec8b43b.css" rel="stylesheet"></head><body class="index"><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>';
+    sandbox.stub(fs, 'readFileSync').returns();
+    sandbox.stub(path, 'join');
+    sandbox.stub(app, 'all').returns(indexHTMLContent)
+    const value = build({ expressApplication: app, rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/index.html' });
+    expect(value).toEqual(undefined);
+  })
 
-  it('Serve built html file', async () => {
-    sandbox.stub(buildFunction, 'builtStaticFiles').returns(Promise.reject(new Error('error')));
-    const mockResponse = 'error';
-    buildFunction.builtStaticFiles(mockResponse);
-    expect(mockResponse).toEqual('error');
-  });
+  it('Serve html files', () => {
+    const value = build({ expressApplication: app, rootDirectory: 'D:/JS/CHECK-IN', filePath: '/client/build/index.html' });
+    expect(value).toEqual(undefined)
+  })
 
-  it('Serve built static file', async () => {
-    const value = buildFunction.builtStaticFiles({ expressApplication: 'app', express: 'express', folderName: '/static', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/static' });
-    console.log(value);
-    expect(value).toEqual(null);
+  it('Serve built static file', () => {
+    sandbox.stub(app, 'use').returns();
+    sandbox.stub(express, 'static');
+    const value = builtStaticFiles({ expressApplication: app, express: express, folderName: '/static', rootDirectory: 'D:/JS/CHECK-IN/server', filePath: '/../client/build/static' });
+    expect(value).toEqual(value);
   });
 });
