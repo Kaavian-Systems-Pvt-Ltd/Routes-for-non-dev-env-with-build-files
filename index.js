@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+let indexHTMLContent;
 
 /**
  * Function - For any other request, serve HTML in DIT environment (cloud env).
@@ -9,15 +10,17 @@ const path = require('path');
  * @param {{* expressApplication: express(), rootDirectory: 'root directory path', filePath: 'path of the file' }}
  * @returns the html file to be served in DIT environment
  */
+ const serveBuiltFile = (req, res) => {
+  res.send(indexHTMLContent);
+}
+
 function build({ expressApplication, rootDirectory, filePath }){
-  const indexHTMLContent = fs.readFileSync(
+  indexHTMLContent = fs.readFileSync(
     path.join(rootDirectory + filePath),
     'utf8'
-  );
-  // console.log(indexHTMLContent);
-  expressApplication.all('*', (req, res) => {
-    res.send(indexHTMLContent);
-  });
+  );  
+  expressApplication.all('*', serveBuiltFile);
+  return true;
 }
 
 /**
@@ -34,8 +37,9 @@ function build({ expressApplication, rootDirectory, filePath }){
       folderName,
     express.static(path.join(rootDirectory + filePath))
    );
+   return true;
 }
 
 module.exports = {
-  build, builtStaticFiles
+  build, builtStaticFiles, serveBuiltFile
 }
