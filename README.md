@@ -14,24 +14,24 @@ After pasting that install the below dependency
 
 **npm i @kaavian-sys/build-files-module**
 
-After installing, you can require the package to your files..
+After installing, you can require the package to your files.
 
 ## build() Module - Serve HTML file
 
-*build()* - For any other request, serve HTML in DIT environment (cloud env). This function requires three parameters
+*build()* - For any other request, serve HTML in DIT environment (cloud env). This function requires three parameters.  
 *Parameters Required - { expressApplication, rootDirectory, filePath }*
 
-**expressApplication** - *express()* Express application function
-**rootDirectory** - *__dirname* Root directoty from the current file or folder
-**filePath** - */path/build/index.html* Exact path of the build index.html file from the root directory.
+**expressApplication** - *express()* Express application function.  
+**rootDirectory** - *__dirname* Root directoty from the current file or folder.  
+**filePath** - */path/build/index.html* Exact path of the build index.html file from the root directory
 
 ## builtStaticFiles() Module - Serve build static cs/jss files
 
-*builtStaticFiles()* - Function that is used for serving built static cs/jss files. This function requires five parameters
+*builtStaticFiles()* - Function that is used for serving built static cs/jss files. This function requires five parameters.  
 *Parameters Required - { expressApplication, express, folderName, rootDirectory, filePath }*
 
-**expressApplication** - *express()* Express application function
-**express** - *express* Express object
-**folderName** - */static* Name of the folder
-**rootDirectory** - *__dirname* Root directoty from the current file or folder
-**filePath** - */path/build/static* Exact path of the build static file from the root directory.
+**expressApplication** - *express()* Express application function.  
+**express** - *express* Express object.  
+**folderName** - */static* Name of the folder.  
+**rootDirectory** - *__dirname* Root directoty from the current file or folder.  
+**filePath** - */path/build/static* Exact path of the build static file from the root directory.  
