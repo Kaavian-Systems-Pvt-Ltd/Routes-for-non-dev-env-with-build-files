@@ -4,8 +4,6 @@
 
 This package provides the modules that are used to serve the HTML file in DIT environment (cloud env) and 
 also serve the built static cs/jss files. It has two modules, build() and builtStaticFiles(). 
-**
----
 
 # Installing and Requiring the package
 
@@ -15,10 +13,8 @@ In package.json file paste the below line
 After pasting that install the below dependency
 
 **npm i @kaavian-sys/build-files-module**
-**
 
 After installing, you can require the package to your files..
----
 
 ## build() Module - Serve HTML file
 
@@ -28,8 +24,6 @@ After installing, you can require the package to your files..
 **expressApplication** - *express()* Express application function
 **rootDirectory** - *__dirname* Root directoty from the current file or folder
 **filePath** - */path/build/index.html* Exact path of the build index.html file from the root directory.
-**
----
 
 ## builtStaticFiles() Module - Serve build static cs/jss files
 
@@ -41,5 +35,3 @@ After installing, you can require the package to your files..
 **folderName** - */static* Name of the folder
 **rootDirectory** - *__dirname* Root directoty from the current file or folder
 **filePath** - */path/build/static* Exact path of the build static file from the root directory.
-**
----
